@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const User = require('C:\Users\Mayank\Desktop\projects\digital-wallet-system\server\models\User.js');
+const User = require('c:/Users/Mayank/Desktop/projects/digital-wallet-system/server/models/User.js');
 
 const auth = async (req, res, next) => {
   try {

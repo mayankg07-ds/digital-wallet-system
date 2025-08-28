@@ -1,6 +1,6 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const User = require('C:\Users\Mayank\Desktop\projects\digital-wallet-system\server\models\User.js');
+const User = require('c:/Users/Mayank/Desktop/projects/digital-wallet-system/server/models/User.js');
 const Wallet = require('c:/Users/Mayank/Desktop/projects/digital-wallet-system/server/models/Wallet.js');
 
 const generateToken = (id) => {
