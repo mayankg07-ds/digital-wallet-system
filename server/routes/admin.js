@@ -1,6 +1,6 @@
 const express = require('express');
-const { getFlaggedTransactions, getTotalBalances, getTopUsers } = require('c:/Users/Mayank/Desktop/projects/digital-wallet-system/server/controllers/adminController.js');
-const auth = require('c:/Users/Mayank/Desktop/projects/digital-wallet-system/server/middleware/auth.js');
+const { getFlaggedTransactions, getTotalBalances, getTopUsers } = require('../controllers/adminController');
+const auth = require('../middleware/auth');
 const router = express.Router();
 
 // Middleware to check admin

@@ -7,7 +7,9 @@ const morgan = require('morgan');
 const swaggerUi = require('swagger-ui-express');
 const YAML = require('yamljs');
 
-const swaggerDocument = YAML.load('c:/Users/Mayank/Desktop/projects/digital-wallet-system/server/docs/openapi.yaml');
+ const path = require('path');
+
+const swaggerDocument = YAML.load(path.join(__dirname, 'docs', 'openapi.yaml'));
 
 const app = express();
 
@@ -16,6 +18,16 @@ app.use(helmet());
 app.use(cors());
 app.use(morgan('combined'));
 app.use(express.json());
+
+// DB health route
+app.get('/db/health', (req, res) => {
+  const stateMap = ['disconnected', 'connected', 'connecting', 'disconnecting'];
+  res.json({
+    state: stateMap[mongoose.connection.readyState],
+    host: mongoose.connection.host,
+    name: mongoose.connection.name
+  });
+});
 
 // Basic route
 app.get('/', (req, res) => {
@@ -27,10 +39,10 @@ mongoose.connect(process.env.MONGODB_URI)
   .then(() => {
 
     // Load routes **AFTER** DB is ready
-    const authRoutes = require('c:/Users/Mayank/Desktop/projects/digital-wallet-system/server/routes/auth.js');
-    const walletRoutes = require('c:/Users/Mayank/Desktop/projects/digital-wallet-system/server/routes/wallet.js');
-    const adminRoutes = require('c:/Users/Mayank/Desktop/projects/digital-wallet-system/server/routes/admin.js');
-    const fraudJobs = require('c:/Users/Mayank/Desktop/projects/digital-wallet-system/server/jobs/fraudScanner.js');
+    const authRoutes = require('./routes/auth');
+    const walletRoutes = require('./routes/wallet');
+    const adminRoutes = require('./routes/admin');
+    const fraudJobs = require('./jobs/fraudScanner');
 
     app.use('/api/auth', authRoutes);
     app.use('/api/wallet', walletRoutes);

@@ -1,6 +1,6 @@
 const express = require('express');
-const { deposit, withdraw, transfer } = require('c:/Users/Mayank/Desktop/projects/digital-wallet-system/server/controllers/walletController.js');
-const auth = require('c:/Users/Mayank/Desktop/projects/digital-wallet-system/server/middleware/auth.js');
+const { deposit, withdraw, transfer } = require('../controllers/walletController');
+const auth = require('../middleware/auth');
 const { transactionLimiter } = require('../middleware/rateLimiter');
 const router = express.Router();
 

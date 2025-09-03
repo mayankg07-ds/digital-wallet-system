@@ -1,4 +1,4 @@
-const Transaction = require('c:/Users/Mayank/Desktop/projects/digital-wallet-system/server/models/Transaction');
+const Transaction = require('../models/Transaction');
 
 const checkFraudPatterns = async (userId, amount) => {
   try {

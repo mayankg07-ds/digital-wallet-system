@@ -1,7 +1,7 @@
 const cron = require('node-cron');
-const Transaction = require('c:/Users/Mayank/Desktop/projects/digital-wallet-system/server/models/Transaction');
-const Wallet = require('c:/Users/Mayank/Desktop/projects/digital-wallet-system/server/models/Wallet');
-const User = require('c:/Users/Mayank/Desktop/projects/digital-wallet-system/server/models/User');
+const Transaction = require('../models/Transaction');
+const Wallet = require('../models/Wallet');
+const User = require('../models/user');
 
 // Scan for suspicious patterns every hour
 const scanSuspiciousPatterns = cron.schedule('0 * * * *', async () => {

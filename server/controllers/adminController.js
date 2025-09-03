@@ -1,6 +1,6 @@
-const Transaction = require('c:/Users/Mayank/Desktop/projects/digital-wallet-system/server/models/Transaction');
-const Wallet = require('c:/Users/Mayank/Desktop/projects/digital-wallet-system/server/models/Wallet');
-const User = require('c:/Users/Mayank/Desktop/projects/digital-wallet-system/server/models/User');
+const Transaction = require('../models/Transaction');
+const Wallet = require('../models/Wallet');
+const User = require('../models/user');
 
 // Get flagged transactions
 exports.getFlaggedTransactions = async (req, res) => {

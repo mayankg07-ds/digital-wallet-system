@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
-const Wallet = require('c:/Users/Mayank/Desktop/projects/digital-wallet-system/server/models/Wallet.js');
-const Transaction = require('c:/Users/Mayank/Desktop/projects/digital-wallet-system/server/models/Transaction');
-const User = require('c:/Users/Mayank/Desktop/projects/digital-wallet-system/server/models/User.js');
-const { checkFraudPatterns } = require('C:/Users/Mayank/Desktop/projects/digital-wallet-system/server/utils/fraudDetection.js');
+const Wallet = require('../models/Wallet');
+const Transaction = require('../models/Transaction');
+const User = require('../models/user');
+const { checkFraudPatterns } = require('../utils/fraudDetection');
 
 // Deposit funds
 exports.deposit = async (req, res) => {
