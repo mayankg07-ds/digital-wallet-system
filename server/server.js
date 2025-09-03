@@ -1,9 +1,13 @@
+require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const helmet = require('helmet');
 const morgan = require('morgan');
-require('dotenv').config();
+const swaggerUi = require('swagger-ui-express');
+const YAML = require('yamljs');
+
+const swaggerDocument = YAML.load('c:/Users/Mayank/Desktop/projects/digital-wallet-system/server/docs/openapi.yaml');
 
 const app = express();
 
@@ -13,35 +17,37 @@ app.use(cors());
 app.use(morgan('combined'));
 app.use(express.json());
 
-// Routes
-const authRoutes = require('./routes/auth');
-const walletRoutes = require('./routes/wallet');
-const adminRoutes = require('c:/Users/Mayank/Desktop/projects/digital-wallet-system/server/routes/admin.js');
-const fraudJobs = require('c:/Users/Mayank/Desktop/projects/digital-wallet-system/server/jobs/fraudScanner.js');
-
-
-app.use('/api/auth', authRoutes);
-app.use('/api/wallet', walletRoutes);
-app.use('/api/admin', adminRoutes);
-
-// Database connection
-mongoose.connect(process.env.MONGODB_URI)
-  .then(() => console.log('Connected to MongoDB'))
-  .catch((err) => console.error('MongoDB connection error:', err));
-
 // Basic route
 app.get('/', (req, res) => {
   res.json({ message: 'Digital Wallet API is running' });
 });
 
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
-// Swagger Documentation
-const swaggerUi = require('swagger-ui-express');
-const YAML = require('yamljs');
-const swaggerDocument = YAML.load('c:/Users/Mayank/Desktop/projects/digital-wallet-system/server/docs/openapi.yaml');
+// Database connection
+mongoose.connect(process.env.MONGODB_URI)
+  .then(() => {
 
+    // Load routes **AFTER** DB is ready
+    const authRoutes = require('c:/Users/Mayank/Desktop/projects/digital-wallet-system/server/routes/auth.js');
+    const walletRoutes = require('c:/Users/Mayank/Desktop/projects/digital-wallet-system/server/routes/wallet.js');
+    const adminRoutes = require('c:/Users/Mayank/Desktop/projects/digital-wallet-system/server/routes/admin.js');
+    const fraudJobs = require('c:/Users/Mayank/Desktop/projects/digital-wallet-system/server/jobs/fraudScanner.js');
 
-app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+    app.use('/api/auth', authRoutes);
+    app.use('/api/wallet', walletRoutes);
+    app.use('/api/admin', adminRoutes);
+
+    // Swagger Docs
+    app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
+    // Start server only after DB ready
+    const PORT = process.env.PORT || 5000;
+    app.listen(PORT, () => {
+      console.log(`🚀 Server running on port ${PORT}`);
+    });
+    console.log('✅ Connected to MongoDB')
+  })
+  .catch((err) => {
+    console.error('❌ MongoDB connection error:', err);
+    process.exit(1);
+
+  });
